@@ -1,3 +1,18 @@
 import time 
 import os
 
+#For clearing screen
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+#Countdown function displaying remaining time
+def countdown(seconds, session_type):
+    while seconds > 0:
+        mins, secs = divmod(seconds, 60)
+        #Formats time as mm:ss
+        timeformat = '{:02d}:{:02d}'.format(mins, secs)
+        time.sleep(1)
+        seconds -= 1
+    print(f"{session_type} session ended!\n")
+
+
