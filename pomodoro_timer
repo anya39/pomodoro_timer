@@ -24,24 +24,25 @@ work_duration = int(input("\nEnter work duration in minutes: ")) * 60
 #Ask user for duration of break session
 break_duration = int(input("Enter break duration in minutes: ")) * 60
 
-#Start Pomodoro timer
-print("\n\nStarting Pomodoro Timer...\n")
+while True:
+    #Start Pomodoro timer
+    print("\n\nStarting Pomodoro Timer...\n")
 
-time.sleep(1.5)
+    time.sleep(1.5)
 
-#Starts work session
-print("Work session started!")
-countdown(work_duration, "Work")
+    #Starts work session
+    print("Work session started!\n")
+    countdown(work_duration, "Work")
 
-#Clear screen between sessions
-clear_screen()
+    #Clear screen between sessions
+    clear_screen()
 
-#Starts break session
-print("Break session started!")
-countdown(break_duration, "Break")
+    #Starts break session
+    print("Break session started!\n")
+    countdown(break_duration, "Break")
 
-
-
-
-
-
+    #Asks user if want to repeat cycle (loop)
+    repeat = input("Do you want to start another Pomodoro cycle? (y/n): ").lower()
+    if repeat != 'y':
+        print("Pomodoro session ended. Good job!")
+        break
