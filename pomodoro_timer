@@ -5,21 +5,43 @@ import os
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+clear_screen()
+
 #Countdown function displaying remaining time
 def countdown(seconds, session_type):
     while seconds > 0:
         mins, secs = divmod(seconds, 60)
         #Formats time as mm:ss
         timeformat = '{:02d}:{:02d}'.format(mins, secs)
+        print(f"{session_type} Time Remaining: {timeformat} ", end = '\r')
         time.sleep(1)
         seconds -= 1
     print(f"{session_type} session ended!\n")
 
-while True:
-    #Ask user for duration of work session
-    work_duration = int(input("\nEnter work duration in minutes: ")) * 60
-    #Ask user for duration of break session
-    break_duration = int(input("Enter break duration in minutes: ")) * 60
-    
+
+#Ask user for duration of work session
+work_duration = int(input("\nEnter work duration in minutes: ")) * 60
+#Ask user for duration of break session
+break_duration = int(input("Enter break duration in minutes: ")) * 60
+
+#Start Pomodoro timer
+print("\n\nStarting Pomodoro Timer...\n")
+
+time.sleep(1.5)
+
+#Starts work session
+print("Work session started!")
+countdown(work_duration, "Work")
+
+#Clear screen between sessions
+clear_screen()
+
+#Starts break session
+print("Break session started!")
+countdown(break_duration, "Break")
+
+
+
+
 
 
