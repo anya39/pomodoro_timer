@@ -1,5 +1,10 @@
+#Import libraries
 import time 
 import os
+from colorama import Fore, Style, init
+init(autoreset=True)
+
+#
 
 #For clearing screen
 def clear_screen():
@@ -11,14 +16,24 @@ pomodoro_count = 0
 
 #Countdown function displaying remaining time
 def countdown(seconds, session_type):
+    #Color coding for type of session
+    if session_type == "Work":
+        color = Fore.RED
+    elif session_type == "Break":
+        color = Fore.GREEN
+    elif session_type == "Long Break":
+        color = Fore.BLUE
+    else:
+        color = Fore.WHITE
+
     while seconds > 0:
         mins, secs = divmod(seconds, 60)
         #Formats time as mm:ss
         timeformat = '{:02d}:{:02d}'.format(mins, secs)
-        print(f"{session_type} Time Remaining: {timeformat} ", end = '\r')
+        print(f"{color}{session_type} Time Remaining: {timeformat} ", end = '\r')
         time.sleep(1)
         seconds -= 1
-    print(f"{session_type} session ended!\n")
+    print(f"{color}{session_type} session ended!\n")
     #Play sound at end of session (only works on Mac)
     os.system('afplay /System/Library/Sounds/Glass.aiff')
     
@@ -41,30 +56,35 @@ while True:
     print("Work session started!\n")
     countdown(work_duration, "Work")
     
+    #Update pomodoro count
+    pomodoro_count += 1
+    
     #Clear screen between sessions
     clear_screen()
 
-    #Starts break session
-    print("Break session started!\n")
-    countdown(break_duration, "Break")
+    #Decide which break type to take
+    if pomodoro_count % 4 == 0:
+        break_duration = break_duration * 2
+        print(f"✅ {pomodoro_count} Pomodoros completed! You finished a full set, it's time for a longer break! 🌴\n")
+        countdown(break_duration, "Long Break")
+    else:
+        #Starts standard break session
+        print("Break session started!\n")
+        countdown(break_duration, "Break")
     
     #Update and display pomodoro count
-    pomodoro_count += 1
     if pomodoro_count == 1:
         print("1 Pomodoro completed! Great start! 🚀 \n")
     elif pomodoro_count == 2:
         print("2 Pomodoros completed! Keep it up! 💪 \n")
     elif pomodoro_count == 3:
         print("3 Pomodoros completed! Almost a full set! 🎯 \n")
-    elif pomodoro_count % 4 == 0:
-        print(f"✅ {pomodoro_count} Pomodoros completed! You finished a full set, it's time for a longer break! 🌴")
     else:
         print(f"{pomodoro_count} Pomodoros completed! 🙌")
-
 
 
     #Asks user if want to repeat cycle (loop)
     repeat = input("Do you want to start another Pomodoro cycle? (y/n): ").lower()
     if repeat != 'y':
-        print("Pomodoro session ended. Good job!")
+        print("Pomodoro session ended. Good job!\n")
         break
