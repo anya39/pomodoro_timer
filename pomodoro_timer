@@ -3,19 +3,30 @@ import time
 import os
 import random
 from colorama import Fore, Style, init
+
 init(autoreset=True) #Resets color after each print
 
-#Setting up celebration for long break
-def celebrate():
-    confetti = ["🎉", "🌟", "🎊", "🎈"]
+#Sets up long break celebration and themes
+def celebrate(theme):
+    if theme == 1:
+        emojis = ["🎉", "🎊", "🥳"]
+    elif theme == 2:
+        emojis = ["🎈"]
+    elif theme == 3:
+        emojis = ["⭐", "🌟", "✨"]
+    elif theme == 4:
+        emojis = ["🔥", "💥"]
+    elif theme == 5:
+        emojis = ["❤️", "💖", "💕", "🧡", "💛",]
+    else:
+        emojis = ["🎉", "🎊", "🥳", "🎈", "⭐", "🌟", "✨", "🔥", "💥", "💫"]
     
     for _ in range(2): #Number of confetti lines
         line = ""
         for _ in range(7): #Number of emojis per line
-            line += random.choice(confetti)
+            line += random.choice(emojis)
             print(line)
             time.sleep(0.1)
-
 
 #For clearing screen
 def clear_screen():
@@ -52,13 +63,18 @@ def countdown(seconds, session_type):
     #Play sound at end of session (only works on Mac)
     os.system('afplay /System/Library/Sounds/Glass.aiff')
     
+
 #Ask user for duration of work session
 work_duration = int(input("\nEnter work duration in minutes: ")) * 60
 #Ask user for duration of break session
 break_duration = int(input("Enter break duration in minutes: ")) * 60
 #Ask user for duration of long break session
-long_break_duration = int(input("Enter long break duration in minutes: ")) * 60
+long_break_duration = int(input("Enter long break (achieved after 4 work sessions) duration in minutes: ")) * 60
+#Ask user for celebration theme preference
+theme = int(input("\nChoose an emoji celebration theme for long breaks\n(1: Confetti, 2: Balloons, 3: Stars, 4: Fire, 5: Hearts, 6: Random)\nEnter #: "))
 
+
+#Main while loop to alternate between work and break sessions
 while True:
     #Start Pomodoro timer
     print("\n\nStarting Pomodoro Timer...\n")
@@ -78,7 +94,7 @@ while True:
         #Clear screen between sessions
         clear_screen()
         print(f"✅ {pomodoro_count} Pomodoros completed! You finished a full set, it's time for a longer break! 🌴\n")
-        celebrate()
+        celebrate() #Calls emoji celebration function
         countdown(long_break_duration, "Long Break")
         long_break_count += 1
     else:
@@ -112,4 +128,4 @@ while True:
         print(f"Total Short Breaks Taken: {short_break_count}")
         time.sleep(1)
         print(f"Total Long Breaks Taken: {long_break_count}\n\n\n")
-        break
+        break #Ends the while loop
