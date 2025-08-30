@@ -94,7 +94,7 @@ while True:
         #Clear screen between sessions
         clear_screen()
         print(f"✅ {pomodoro_count} Pomodoros completed! You finished a full set, it's time for a longer break! 🌴\n")
-        celebrate() #Calls emoji celebration function
+        celebrate(theme) #Calls emoji celebration function
         countdown(long_break_duration, "Long Break")
         long_break_count += 1
     else:
