@@ -2,9 +2,7 @@
 import time 
 import os
 from colorama import Fore, Style, init
-init(autoreset=True)
-
-#
+init(autoreset=True) #Resets color after each print
 
 #For clearing screen
 def clear_screen():
@@ -12,7 +10,11 @@ def clear_screen():
 
 clear_screen()
 
+#Statistics tracking
 pomodoro_count = 0
+total_work_time = 0
+short_break_count = 0
+long_break_count = 0
 
 #Countdown function displaying remaining time
 def countdown(seconds, session_type):
@@ -40,11 +42,11 @@ def countdown(seconds, session_type):
 
 
 #Ask user for duration of work session
-work_duration = 5
-#int(input("\nEnter work duration in minutes: ")) * 60
+work_duration = int(input("\nEnter work duration in minutes: ")) * 60
 #Ask user for duration of break session
-break_duration = 3
-#int(input("Enter break duration in minutes: ")) * 60
+break_duration = int(input("Enter break duration in minutes: ")) * 60
+#Ask user for duration of long break session
+long_break_duration = int(input("Enter long break duration in minutes: ")) * 60
 
 while True:
     #Start Pomodoro timer
@@ -55,6 +57,7 @@ while True:
     #Starts work session
     print("Work session started!\n")
     countdown(work_duration, "Work")
+    total_work_time += work_duration // 60 #Updates work time stats in mins
     
     #Update pomodoro count
     pomodoro_count += 1
@@ -64,13 +67,14 @@ while True:
 
     #Decide which break type to take
     if pomodoro_count % 4 == 0:
-        break_duration = break_duration * 2
         print(f"✅ {pomodoro_count} Pomodoros completed! You finished a full set, it's time for a longer break! 🌴\n")
-        countdown(break_duration, "Long Break")
+        countdown(long_break_duration, "Long Break")
+        long_break_count += 1
     else:
         #Starts standard break session
         print("Break session started!\n")
         countdown(break_duration, "Break")
+        short_break_count += 1
     
     #Update and display pomodoro count
     if pomodoro_count == 1:
@@ -87,4 +91,13 @@ while True:
     repeat = input("Do you want to start another Pomodoro cycle? (y/n): ").lower()
     if repeat != 'y':
         print("Pomodoro session ended. Good job!\n")
+        time.sleep(0.5)
+        print("📊 Session Statistics Summary:\n")
+        print(f"Total Pomodoros Completed: {pomodoro_count}")
+        time.sleep(0.5)
+        print(f"Total Work Time: {total_work_time} minutes")
+        time.sleep(0.5)
+        print(f"Total Short Breaks Taken: {short_break_count}")
+        time.sleep(0.5)
+        print(f"Total Long Breaks Taken: {long_break_count}\n")
         break
