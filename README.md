@@ -1,2 +1,2 @@
 # pomodoro_timer
-A Pomodoro style countdown study timer where you can choose amounts of time for work and breaks
+This is a pomodoro style countdown timer that can be used for study sessions. You can choose desired lengths for work, break, and long break sessions. After 4 work sessions are completed, the long break takes place and emojis are displayed as a celebration. 
