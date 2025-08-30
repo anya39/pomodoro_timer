@@ -40,7 +40,6 @@ def countdown(seconds, session_type):
     os.system('afplay /System/Library/Sounds/Glass.aiff')
     
 
-
 #Ask user for duration of work session
 work_duration = int(input("\nEnter work duration in minutes: ")) * 60
 #Ask user for duration of break session
@@ -62,15 +61,17 @@ while True:
     #Update pomodoro count
     pomodoro_count += 1
     
-    #Clear screen between sessions
-    clear_screen()
 
-    #Decide which break type to take
+    #Decide which type of break to take
     if pomodoro_count % 4 == 0:
+        #Clear screen between sessions
+        clear_screen()
         print(f"✅ {pomodoro_count} Pomodoros completed! You finished a full set, it's time for a longer break! 🌴\n")
         countdown(long_break_duration, "Long Break")
         long_break_count += 1
     else:
+        #Clear screen between sessions
+        clear_screen()
         #Starts standard break session
         print("Break session started!\n")
         countdown(break_duration, "Break")
@@ -78,26 +79,26 @@ while True:
     
     #Update and display pomodoro count
     if pomodoro_count == 1:
-        print("1 Pomodoro completed! Great start! 🚀 \n")
+        print("1 Pomodoro session completed! Great start! 🚀 \n")
     elif pomodoro_count == 2:
-        print("2 Pomodoros completed! Keep it up! 💪 \n")
+        print("2 Pomodoro sessions completed! Keep it up! 💪 \n")
     elif pomodoro_count == 3:
-        print("3 Pomodoros completed! Almost a full set! 🎯 \n")
+        print("3 Pomodoro sessions completed! Almost a full set! 🎯 \n")
     else:
-        print(f"{pomodoro_count} Pomodoros completed! 🙌")
+        print(f"{pomodoro_count} Pomodoro sessions completed! 🙌\n")
 
 
     #Asks user if want to repeat cycle (loop)
     repeat = input("Do you want to start another Pomodoro cycle? (y/n): ").lower()
     if repeat != 'y':
-        print("Pomodoro session ended. Good job!\n")
-        time.sleep(0.5)
+        print("\nPomodoro session ended. Good job!\n")
+        time.sleep(2)
         print("📊 Session Statistics Summary:\n")
-        print(f"Total Pomodoros Completed: {pomodoro_count}")
-        time.sleep(0.5)
+        print(f"Total Pomodoro sessions Completed: {pomodoro_count}")
+        time.sleep(1)
         print(f"Total Work Time: {total_work_time} minutes")
-        time.sleep(0.5)
+        time.sleep(1)
         print(f"Total Short Breaks Taken: {short_break_count}")
-        time.sleep(0.5)
-        print(f"Total Long Breaks Taken: {long_break_count}\n")
+        time.sleep(1)
+        print(f"Total Long Breaks Taken: {long_break_count}\n\n\n")
         break
