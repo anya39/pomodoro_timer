@@ -1,8 +1,21 @@
 #Import libraries
 import time 
 import os
+import random
 from colorama import Fore, Style, init
 init(autoreset=True) #Resets color after each print
+
+#Setting up celebration for long break
+def celebrate():
+    confetti = ["🎉", "🌟", "🎊", "🎈"]
+    
+    for _ in range(2): #Number of confetti lines
+        line = ""
+        for _ in range(7): #Number of emojis per line
+            line += random.choice(confetti)
+            print(line)
+            time.sleep(0.1)
+
 
 #For clearing screen
 def clear_screen():
@@ -39,7 +52,6 @@ def countdown(seconds, session_type):
     #Play sound at end of session (only works on Mac)
     os.system('afplay /System/Library/Sounds/Glass.aiff')
     
-
 #Ask user for duration of work session
 work_duration = int(input("\nEnter work duration in minutes: ")) * 60
 #Ask user for duration of break session
@@ -61,12 +73,12 @@ while True:
     #Update pomodoro count
     pomodoro_count += 1
     
-
     #Decide which type of break to take
     if pomodoro_count % 4 == 0:
         #Clear screen between sessions
         clear_screen()
         print(f"✅ {pomodoro_count} Pomodoros completed! You finished a full set, it's time for a longer break! 🌴\n")
+        celebrate()
         countdown(long_break_duration, "Long Break")
         long_break_count += 1
     else:
@@ -87,11 +99,10 @@ while True:
     else:
         print(f"{pomodoro_count} Pomodoro sessions completed! 🙌\n")
 
-
     #Asks user if want to repeat cycle (loop)
     repeat = input("Do you want to start another Pomodoro cycle? (y/n): ").lower()
     if repeat != 'y':
-        print("\nPomodoro session ended. Good job!\n")
+        print("\nPomodoro session ended. Good job!\n\n")
         time.sleep(2)
         print("📊 Session Statistics Summary:\n")
         print(f"Total Pomodoro sessions Completed: {pomodoro_count}")
